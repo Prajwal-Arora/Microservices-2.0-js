@@ -1,4 +1,4 @@
-### This code contains all the apis and features present in the following links
+### This code contains all the APIs and features present in the following links
 
 - https://www.coinex.com/en
 - https://www.coinex.com/en/markets/coin
