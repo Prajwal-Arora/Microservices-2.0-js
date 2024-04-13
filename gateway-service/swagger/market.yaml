@@ -1,0 +1,240 @@
+tags:
+  name: Market
+  description: Market related Apis
+
+/market-api/v1/fetch/price-change:
+  get:
+    summary: Fetch Price Change
+    description: To fetch changes in price
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: symbol
+        description: The symbol of the coin for which price changes are being fetched
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/coin-details:
+  get:
+    summary: Fetch coin details
+    description: fetch details of a crypto coin
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: symbol
+        description: The symbol of the coin for which details are being fetched
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/coin-list:
+  get:
+    summary: Fetch coin list
+    description: To fetch coin list
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: page
+        description: For which page you want to fetch coin list
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/chart-data:
+  get:
+    summary: Fetch coin chart data
+    description: To fetch chart data of a particular coin
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: symbol
+        description: For which coin you want to fetch chart data
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: filter
+        description: For which period of time you want to fetch chart data
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/market-cards:
+  get:
+    summary: Fetch market cards data
+    description: To fetch cards data including up, down and total volume.
+    tags:
+      - Market
+    parameters:
+
+/market-api/v1/fetch/market-overview-cards:
+  get:
+    summary: Fetch market overview cards data
+    description: To fetch cards data including top searches, top losers, top gainers, top market leaders.
+    tags:
+      - Market
+    parameters:
+
+/market-api/v1/fetch/pd-chart-data:
+  get:
+    summary: Fetch market overview cards data
+    description: To fetch cards data including top searches, top losers, top gainers, top market leaders.
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: filter
+        description: For which period of time you want to fetch chart data
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/inc-searches:
+  put:
+    summary: Increment Search
+    description: To increment search count of the coin when user search for any particular coin.
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: symbol
+        description: For which coin you want to increment search count
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/search:
+  get:
+    summary: Search coin
+    description: To search for any particular coin.
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: search
+        description: Coin that you want to search
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/tv-chart:
+  get:
+    summary: Trading view Chart
+    description: To get trading view chart data of a particular coin
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: symbol
+        description: Coin for which you want to get chart data
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: resolution
+        description: Period of time for which you want to get data. For example- 1D
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: Timestamp
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: to
+        description: Timestamp
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/tv-coins-list:
+  get:
+    summary: TV Coin List
+    description: To get coin list
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: quote_asset
+        description: Quote asset
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/fetch/tv-bar:
+  get:
+    summary: TV Coin Bar
+    description: To get coin data
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: quote_asset
+        description: Quote asset
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: base_asset
+        description: Base asset
+        required: true
+        schema:
+          type: string
+
+/market-api/v1/set/favToken:
+  post:
+    summary: Set Favorite Token
+    description: To set a token in your favourite list
+    tags:
+      - Market
+    parameters:
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FavTokenInput'
+          example:
+            email: mailto:xyz@email,
+            base_asset: ABC,
+            quote_asset: XYZ
+
+/market-api/v1/fetch/favTokens:
+  get:
+    summary: Get Favorite Tokens
+    description: To get favorites tokens
+    tags:
+      - Market
+    parameters:
+      - in: query
+        name: email
+        description: Email of user
+        required: true
+        schema:
+          type: string
+
+components:
+  schemas:
+    FavTokenInput:
+      type: object
+      required:
+        - email
+        - base_asset
+        - quote_asset
+      properties:
+        email:
+          type: string
+          description: E-mail Id of Registered User
+        base_asset:
+          type: string
+          description: base asset of coin
+        quote_asset:
+          type: string
+          description: quote asset of coin

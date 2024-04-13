@@ -1,0 +1,130 @@
+tags:
+  name: User
+  description: User related Apis
+
+/um-api/v1/user/details:
+  get:
+    summary: Details of user
+    description: To get details of a single user
+    tags:
+      - User
+
+/um-api/v1/user/reset-password:
+  put:
+    summary: Reset Password
+    description: To reset password if user want to change his password
+    tags:
+      - User
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResetPasswordInput'
+          example:
+            password: mysecretpassword
+
+/um-api/v1/user/logout:
+  put:
+    summary: Logout
+    description: To logout from the application
+    tags:
+      - User
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LogoutInput'
+          example:
+            ip: xx.xx.xx.xx,
+            email: email@email
+
+/um-api/v1/user/loginHistory:
+  get:
+    summary: Login history
+    description: To fetch login history of user
+    tags:
+      - User
+
+/um-api/v1/user/toggle-freeze:
+  put:
+    summary: Login history
+    description: To fetch login history of user
+    tags:
+      - User
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ToggleFreeze'
+          example:
+            email: email@email
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: time
+        updatedAt:
+          type: time
+
+    LogoutInput:
+      type: object
+      required:
+        - email
+        - ip
+      properties:
+        email:
+          type: string
+          description: E-mail Id of Registered User
+        ip:
+          type: string
+          description: IP of User
+    ToggleFreeze:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          description: E-mail Id of Registered User
+
+    ResetPasswordInput:
+      type: object
+      required:
+        - password
+      properties:
+        password:
+          type: string
+          description: Changed Password for Registered User
+
+    LoginWithOTP:
+      type: object
+      required:
+        - email
+        - password
+        - otp
+      properties:
+        email:
+          type: string
+          description: email address of the user
+        password:
+          type: string
+          description: password of the user account
+        otp:
+          type: number
+          description: otp recieved on email account

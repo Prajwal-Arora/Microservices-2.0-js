@@ -1,0 +1,128 @@
+tags:
+  name: 2FA
+  description: APIs required to perform 2FA
+
+/um-api/v1/2fa/setupAuth:
+  post:
+    summary: Setup 2fa
+    description: Setup 2 Factor Authentication
+    tags:
+      - 2FA
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+            example:
+              id: 123e4567-e89b-12d3-a456-426614174000
+    responses:
+      200:
+        description: Successfully setup 2fa
+      404:
+        description: 'User not found'
+      409:
+        description: 'Two-factor Auth is already enabled for this user'
+
+/um-api/v1/2fa/verify:
+  post:
+    summary: Verify 2fa
+    description: Verify 2 Factor Authentication
+    tags:
+      - 2FA
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - token
+              - secretKey
+            properties:
+              id:
+                type: string
+              token:
+                type: string
+              secretKey:
+                type: string
+            example:
+              id: 'UserID'
+              token: 'token'
+              secretKey: 'secret Key'
+    responses:
+      200:
+        description: User verified
+        content:
+          application/json:
+            example:
+              status: true
+              message: 'user verified'
+              user: 'secretKey'
+      400:
+        description: Invalid input error
+      404:
+        description: User not found
+
+/um-api/v1/2fa/validateAuth:
+  post:
+    summary: Validate 2fa
+    description: Validate 2 Factor Authentication
+    tags:
+      - 2FA
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+              - token
+            properties:
+              id:
+                type: string
+              token:
+                type: string
+            example:
+              id: 123e4567-e89b-12d3-a456-426614174000
+              token: 'token'
+    responses:
+      200:
+        description: Successfully setup 2FA
+        content:
+          application/json:
+            example:
+              status: true,
+              message: 'User Verified'
+      400:
+        description: Invalid input/request error
+
+/um-api/v1/2fa/disable2Fa:
+  post:
+    summary: disable Two factor authentication
+    description: Disable Tow factor authentication for a user
+    tags:
+      - 2FA
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - token
+            properties:
+              token:
+                type: string
+            example:
+              token: '962699'
+    responses:
+      200:
+        description: Two factor authentication disabled
+        content:
+          application/json:
+            example:
+              message: 'Two Factor Authentication Disabled'

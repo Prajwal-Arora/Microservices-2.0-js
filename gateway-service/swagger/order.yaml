@@ -1,0 +1,838 @@
+tags:
+  name: Orders
+  description: Orders related Apis
+
+/orders-api/v1/set-account-level:
+  post:
+    summary: Set Account Level
+    description: To set the account level
+    tags:
+      - Orders
+    parameters:
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SetAccountLevelInput"
+          example:
+            acctLv: "1"
+
+/orders-api/v1/set-leverage:
+  post:
+    summary: Set Leverage
+    description: To set the leverage
+    tags:
+      - Orders
+    parameters:
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SetLeverageInput"
+          example:
+            instId: "BTC-USDT"
+            mgnMode: "isolated"
+            lever: 10
+
+/orders-api/v1/get-leverage:
+  get:
+    summary: Get Leverage
+    description: To Get the leverage
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: mgnMode
+        required: true
+        schema:
+          type: string
+        description: Margin Mode
+
+/orders-api/v1/get-account-level:
+  get:
+    summary: Get Account Level
+    description: To Get the account level
+    tags:
+      - Orders
+
+/orders-api/v1/new-order:
+  post:
+    summary: Place Order
+    description: To place a new order
+    tags:
+      - Orders
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlaceOrderInput"
+          example:
+            instId: LINK-USDT
+            tdMode: cash
+            side: sell
+            ordType: limit
+            sz: 0.1
+            px: 6.1
+
+/orders-api/v1/cancel-order:
+  post:
+    summary: Cancel Order
+    description: To cancel a new order
+    tags:
+      - Orders
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CancelOrderInput"
+          example:
+            instId: LINK-USDT
+            ordId: "591341198334611463"
+
+/orders-api/v1/recent-trades:
+  get:
+    summary: Get Recent Trades
+    description: To Get Rencent Trades
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: limit
+        required: true
+        schema:
+          type: string
+        description: Limit
+
+/orders-api/v1/order-book:
+  get:
+    summary: Get Order Book
+    description: To Get Order Book
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: sz
+        required: true
+        schema:
+          type: string
+        description: Size
+
+/orders-api/v1/deposit-address:
+  get:
+    summary: Get Deposit Address
+    description: To Get Deposit Address
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: ccy
+        required: true
+        schema:
+          type: string
+        description: Ccy
+
+/orders-api/v1/generate-deposit-address:
+  post:
+    summary: Generate Deposit Address
+    description: To generate deposit address
+    tags:
+      - Orders
+    parameters:
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GenerateDepositAddressInput"
+          example:
+            ccy: USDT
+            chain: USDT-TRC20
+
+/orders-api/v1/currencies:
+  get:
+    summary: Get Currencies
+    description: To Get Currencies
+    tags:
+      - Orders
+    parameters:
+
+/orders-api/v1/deposit-history:
+  get:
+    summary: Get Deposit History
+    description: To get deposit history
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: page
+        required: true
+        schema:
+          type: string
+        description: Current Page
+      - in: query
+        name: limit
+        required: true
+        schema:
+          type: string
+        description: Number of items
+
+/orders-api/v1/orders-history:
+  get:
+    summary: Get Orders History
+    description: To get orders history
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instType
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+
+/orders-api/v1/open-orders:
+  get:
+    summary: Get Open Orders
+    description: To get open orders
+    tags:
+      - Orders
+    parameters:  
+      - in: query
+        name: ordType
+        required: true
+        schema:
+          type: string
+        description: Order Type
+
+/orders-api/v1/trading-balance:
+  get:
+    summary: Get Trading Balance
+    description: To get trading balance
+    tags:
+      - Orders
+    parameters:
+
+/orders-api/v1/withdraw:
+  post:
+    summary: Withdraw
+    description: To withdraw balance
+    tags:
+      - Orders
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/WithdrawInput"
+          example:
+            ccy:
+            amt:
+            dest:
+            toAddr:
+            fee:
+            chain:
+            otp:
+
+/orders-api/v1/withdraw-history:
+  get:
+    summary: Get Withdraw History
+    description: To get withdraw history
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: page
+        required: true
+        schema:
+          type: string
+        description: Page
+      - in: limit
+        name: ordType
+        required: true
+        schema:
+          type: string
+        description: Limit
+      - in: instId
+        name: ordType
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: start
+        name: ordType
+        required: true
+        schema:
+          type: string
+        description: Start Date
+      - in: end
+        name: ordType
+        required: true
+        schema:
+          type: string
+        description: End Date
+
+/orders-api/v1/orders-history-archive:
+  get:
+    summary: Get Order History Archive
+    description: To get order history archive
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: start
+        required: true
+        schema:
+          type: string
+        description: Start Date
+      - in: query
+        name: end
+        required: true
+        schema:
+          type: string
+        description: End Date
+      - in: query
+        name: side
+        required: true
+        schema:
+          type: string
+        description: Side
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: page
+        required: true
+        schema:
+          type: string
+        description: Page
+      - in: query
+        name: limit
+        required: true
+        schema:
+          type: string
+        description: limit
+
+/orders-api/v1/orders-distribution-chart:
+  get:
+    summary: Get Orders Distribution Chart
+    description: To get order distribution chart
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: filter
+        required: true
+        schema:
+          type: string
+        description: Filter
+
+/orders-api/v1/positions:
+  get:
+    summary: Get Positions
+    description: To get position
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: instType
+        required: true
+        schema:
+          type: string
+        description: Instrument Type
+      - in: query
+        name: posId
+        required: true
+        schema:
+          type: string
+        description: Position Id
+
+/orders-api/v1/positions-history:
+  get:
+    summary: Get Position History
+    description: To get position history
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: Instrument Id
+      - in: query
+        name: instType
+        required: true
+        schema:
+          type: string
+        description: Instrument Type
+      - in: query
+        name: posId
+        required: true
+        schema:
+          type: string
+        description: Position Id
+      - in: query
+        name: before
+        required: true
+        schema:
+          type: string
+        description: Before
+      - in: query
+        name: after
+        required: true
+        schema:
+          type: string
+        description: After
+      - in: query
+        name: type
+        required: true
+        schema:
+          type: string
+        description: Type
+      - in: query
+        name: mgnMode
+        required: true
+        schema:
+          type: string
+        description: Margin Mode
+
+/orders-api/v1/max-size:
+  get:
+    summary: Get Max Size
+    description: To get max size
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: instId
+      - in: query
+        name: tdMode
+        required: true
+        schema:
+          type: string
+        description: tdMode
+      - in: query
+        name: ccy
+        required: true
+        schema:
+          type: string
+        description: ccy
+      - in: query
+        name: leverage
+        required: true
+        schema:
+          type: string
+        description: leverage
+      - in: query
+        name: unSpotOffset
+        required: true
+        schema:
+          type: string
+        description: unSpotOffset
+      - in: query
+        name: px
+        required: true
+        schema:
+          type: string
+        description: px
+
+/orders-api/v1/max-avail-size:
+  get:
+    summary: Get Max Avail Size
+    description: To get max avail size
+    tags:
+      - Orders
+    parameters:
+      - in: query
+        name: instId
+        required: true
+        schema:
+          type: string
+        description: instId
+      - in: query
+        name: tdMode
+        required: true
+        schema:
+          type: string
+        description: tdMode
+      - in: query
+        name: ccy
+        required: true
+        schema:
+          type: string
+        description: ccy
+      - in: query
+        name: unSpotOffset
+        required: true
+        schema:
+          type: string
+        description: unSpotOffset
+      - in: query
+        name: px
+        required: true
+        schema:
+          type: string
+        description: px
+
+/orders-api/v1/algo-orders:
+  post:
+    summary: Algo Orders
+    description: Algo Orders
+    tags:
+      - Orders
+    parameters:
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AlgoOrderInput"
+          example:
+            instId: BTC-USDT
+            tdMode:
+            side:
+            ordType:
+            sz:
+            posSide:
+            slOrdPx:
+            slTriggerPx:
+            slTriggerPxType:
+            tpOrdPx:
+            tpTriggerPx:
+            tpTriggerPxType:
+            tgtCcy:
+            orderPx:
+            proposedPx:
+            triggerPx:
+            triggerPxType:
+            callbackRatio:
+            callbackSpread:
+            activePx:
+            cxlOnClosePos:
+            reduceOnly:
+
+/orders-api/v1/cancel-algo-orders:
+  post:
+    summary: Cancel Algo Order
+    description: Cancel Algo Orders
+    tags:
+      - Orders
+    parameters:
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CancelAlgoOrderInput"
+          example:
+            - instId: LINK-USDT
+              algoId: 591341198334611463
+            - instId: BTC-USDT
+              algoId: 123456789012345678
+
+/orders-api/v1/cancel-advance-algo-orders:
+  post:
+    summary: Cancel Advance Algo Order
+    description: Cancel Advance Algo Orders
+    tags:
+      - Orders
+    parameters:
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CancelAlgoOrderInput"
+          example:
+            - instId: LINK-USDT
+              algoId: 591341198334611463
+            - instId: BTC-USDT
+              algoId: 123456789012345678
+
+/orders-api/v1/close-position:
+  post:
+    summary: Close Position
+    description: Close Position
+    tags:
+      - Orders
+    parameters:
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ClosePositionInput"
+          example:
+            instId: LINK-USDT
+            mgnMode:
+            posSide:
+            ccy:
+            autoCxl:
+            clOrdId:
+            tag:
+
+components:
+  schemas:
+    SetAccountLevelInput:
+      type: object
+      required:
+        - acctLv
+      properties:
+        acctLv:
+          type: string
+          description: Account level
+
+    SetLeverageInput:
+      type: object
+      required:
+        - instId
+        - mgnMode
+        - lever
+      properties:
+        instId:
+          type: string
+          description: Instrument Id
+        lever:
+          type: string
+          description: Lever
+        mgnMode:
+          type: string
+          description: Margin Mode
+
+    PlaceOrderInput:
+      type: object
+      required:
+        - instId
+        - tdMode
+        - side
+        - ordType
+        - sz
+      properties:
+        instId:
+          type: string
+          description: Instrument Id
+        tdMode:
+          type: string
+          description: Td Mode
+        side:
+          type: string
+          description: Side
+        ordType:
+          type: Order Type
+          description: Margin Mode
+        sz:
+          type: Size
+          description: Margin Mode
+
+    CancelOrderInput:
+      type: object
+      required:
+        - instId
+        - ordId
+      properties:
+        instId:
+          type: string
+          description: Instrument Id
+        ordId:
+          type: string
+          description: Order Id
+
+    GenerateDepositAddressInput:
+      type: object
+      required:
+        - ccy
+        - chain
+      properties:
+        ccy:
+          type: string
+          description: Ccy
+        chain:
+          type: string
+          description: Chain
+
+    WithdrawInput:
+      type: object
+      required:
+        - ccy
+        - amt
+        - dest
+        - toAddr
+        - fee
+        - chain
+        - otp
+      properties:
+        ccy:
+          type: string
+          description: Ccy
+        chain:
+          type: string
+          description: Chain
+        fee:
+          type: string
+          description: fee
+        toAddr:
+          type: string
+          description: toAddr
+        otp:
+          type: string
+          description: otp
+        dest:
+          type: string
+          description: dest
+        amt:
+          type: string
+          description: amt
+
+    AlgoOrderInput:
+      type: object
+      required:
+        - instId
+        - tdMode
+        - side
+        - ordType
+        - sz
+
+      properties:
+        instId:
+          type: string
+          description: instId
+        tdMode:
+          type: string
+          description: tdMode
+        side:
+          type: string
+          description: side
+        ordType:
+          type: string
+          description: ordType
+        sz:
+          type: string
+          description: sz
+        slOrdPx:
+          type: string
+          description: slOrdPx
+        posSide:
+          type: string
+          description: posSide
+        reduceOnly:
+          type: string
+          description: reduceOnly
+        cxlOnClosePos:
+          type: string
+          description: cxlOnClosePos
+        callbackRatio:
+          type: string
+          description: callbackRatio
+        activePx:
+          type: string
+          description: activePx
+        callbackSpread:
+          type: string
+          description: callbackSpread
+        tpTriggerPxType:
+          type: string
+          description: tpTriggerPxType
+        proposedPx:
+          type: string
+          description: proposedPx
+        triggerPx:
+          type: string
+          description: triggerPx
+        triggerPxType:
+          type: string
+          description: triggerPxType
+        tgtCcy:
+          type: string
+          description: tgtCcy
+        slTriggerPxType:
+          type: string
+          description: slTriggerPxType
+        orderPx:
+          type: string
+          description: orderPx
+        slTriggerPx:
+          type: string
+          description: slTriggerPx
+        tpTriggerPx:
+          type: string
+          description: tpTriggerPx
+        tpOrdPx:
+          type: string
+          description: tpOrdPx
+
+    CancelAlgoOrderInput:
+      type: array
+      required:
+        - instId
+        - algoId
+
+      properties:
+        instId:
+          type: string
+          description: instId
+        algoId:
+          type: string
+          description: algoId
+
+    ClosePositionInput:
+      type: object
+      required:
+        - instId
+        - mgnMode
+
+      properties:
+        instId:
+          type: string
+          description: instId
+        mgnMode:
+          type: string
+          description: mgnMode  
+        posSide:
+          type: string
+          description: posSide  
+        ccy:
+          type: string
+          description: ccy  
+        autoCxl:
+          type: string
+          description: autoCxl  
+        clOrdId:
+          type: string
+          description: clOrdId  
+        tag:
+          type: string
+          description: tag         

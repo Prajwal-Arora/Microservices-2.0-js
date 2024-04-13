@@ -1,0 +1,197 @@
+version: '3.9'
+services:
+  gateway_service:
+    container_name: gateway-service
+    image: gateway-service:latest
+    build:
+      context: ./gateway-service/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '8080:8080'
+    networks:
+      - bluenet
+    env_file:
+      - ./gateway-service/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  user_service:
+    container_name: user-service
+    image: user-service:latest
+    build:
+      context: ./user-service/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3000:3000'
+    networks:
+      - bluenet
+    env_file:
+      - ./user-service/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  crons_service:
+    container_name: crons-service
+    image: crons-service:latest
+    build:
+      context: ./crons-service/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3001:3001'
+    networks:
+      - bluenet
+    env_file:
+      - ./crons-service/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  market_service:
+    container_name: market-service
+    image: market-service:latest
+    build:
+      context: ./market-service/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3002:3002'
+    networks:
+      - bluenet
+    env_file:
+      - ./market-service/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  orders_service:
+    container_name: orders-service
+    image: orders-service:latest
+    build:
+      context: ./orders-service/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3003:3003'
+    networks:
+      - bluenet
+    env_file:
+      - ./orders-service/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  notifications_service:
+    container_name: notifications-service
+    image: notifications-service:latest
+    build:
+      context: ./notifications-service/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3004:3004'
+    networks:
+      - bluenet
+    env_file:
+      - ./notifications-service/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  web_sockets:
+    container_name: web-sockets
+    image: web-sockets:latest
+    build:
+      context: ./web-sockets/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3005:3005'
+    networks:
+      - bluenet
+    env_file:
+      - ./web-sockets/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  candle_web_sockets:
+    container_name: candle-web-sockets
+    image: candle-web-sockets:latest
+    build:
+      context: ./candle-web-sockets/.
+      args:
+        NODE_ENV: development
+    ports:
+      - '3008:3008'
+    networks:
+      - bluenet
+    env_file:
+      - ./candle-web-sockets/config/dev.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: always
+
+  mongo_db:
+    container_name: mongo-db
+    image: 'mongo:latest'
+    restart: always
+    networks:
+      - bluenet
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+
+  mongo_express:
+    container_name: mongo-express
+    image: 'mongo-express:latest'
+    restart: always
+    networks:
+      - bluenet
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/
+
+  redis_db:
+    container_name: redis-db
+    image: 'redis:alpine'
+    restart: always
+    networks:
+      - bluenet
+    ports:
+      - '6379:6379'
+
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    build: ./rabbitmq-dockerfile
+    networks:
+      - bluenet
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://rabbitmq:15672']
+      interval: 10s
+      timeout: 10s
+      retries: 2
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq
+
+networks:
+  bluenet:

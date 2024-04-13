@@ -1,0 +1,9 @@
+module.exports = {
+  PORT: process.env.PORT,
+  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
+  USER_SERVICE: process.env.USER_SERVICE,
+  MARKET_SERVICE: process.env.MARKET_SERVICE,
+  ORDER_SERVICE: process.env.ORDER_SERVICE,
+  ELASTIC_APM_SERVICE_NAME: process.env.ELASTIC_APM_SERVICE_NAME,
+  ELASTIC_APM_SERVER_URL: process.env.ELASTIC_APM_SERVER_URL,
+};

@@ -1,0 +1,166 @@
+const { Router } = require('express');
+const TxController = require('../controllers/tx.controller');
+const { authToken } = require('../middlewares/auth.middleware');
+const { freezeCheck } = require('../middlewares/freeze.middleware');
+const { oneDayCheck } = require('../middlewares/tc.middleware');
+const { pwdChangeCheck } = require('../middlewares/withdraw.middleware');
+
+class TxRoute {
+  constructor() {
+    this.path = '/orders-api/v1/';
+    this.router = Router();
+    this.txController = new TxController();
+    this.initializeRoutes();
+  }
+
+  initializeRoutes() {
+    this.router.post(
+      `${this.path}set-account-level`,
+      authToken,
+      this.txController.setAccountLevel.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}set-leverage`,
+      authToken,
+      this.txController.setLeverage.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}get-leverage`,
+      authToken,
+      this.txController.getLeverage.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}get-account-level`,
+      authToken,
+      this.txController.getAccountLevel.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}new-order`,
+      authToken,
+      freezeCheck,
+      this.txController.newOrder.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}amend-order`,
+      authToken,
+      this.txController.amendOrder.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}amend-algo-order`,
+      authToken,
+      this.txController.amendAlgoOrder.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}cancel-order`,
+      authToken,
+      this.txController.cancelOrder.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}recent-trades`,
+      this.txController.getTrades.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}order-book`,
+      this.txController.orderBook.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}generate-deposit-address`,
+      authToken,
+      this.txController.generateDepositAddress.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}deposit-address`,
+      authToken,
+      this.txController.getDepositAddress.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}currencies`,
+      authToken,
+      this.txController.getCurrencies.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}deposit-history`,
+      authToken,
+      this.txController.getDepositHistory.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}orders-history`,
+      authToken,
+      this.txController.getOrdersHistory.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}open-orders`,
+      authToken,
+      this.txController.getOpenOrders.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}trading-balance`,
+      authToken,
+      this.txController.getTradingBalance.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}withdraw`,
+      authToken,
+      freezeCheck,
+      oneDayCheck,
+      pwdChangeCheck,
+      this.txController.withdraw.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}withdraw-history`,
+      authToken,
+      this.txController.withdrawHistory.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}orders-history-archive`,
+      authToken,
+      this.txController.OrdersHistoryArchive.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}orders-distribution-chart`,
+      this.txController.getOrdersDistribution.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}algo-orders`,
+      authToken,
+      freezeCheck,
+      this.txController.placeAlgoOrders.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}cancel-algo-orders`,
+      authToken,
+      this.txController.cancelAlgoOrders.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}cancel-advance-algo-orders`,
+      authToken,
+      this.txController.cancelAdvanceAlgoOrders.bind(this.txController)
+    );
+    this.router.post(
+      `${this.path}close-position`,
+      authToken,
+      this.txController.closePosition.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}positions`,
+      authToken,
+      this.txController.positions.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}positions-history`,
+      authToken,
+      this.txController.positionsHistory.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}max-size`,
+      authToken,
+      this.txController.maxSize.bind(this.txController)
+    );
+    this.router.get(
+      `${this.path}max-avail-size`,
+      authToken,
+      this.txController.maxAvailSize.bind(this.txController)
+    );
+  }
+}
+module.exports = TxRoute;

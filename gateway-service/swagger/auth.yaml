@@ -1,0 +1,211 @@
+tags:
+  name: Auth
+  description: login related Apis
+
+/um-api/v1/auth/signup:
+  post:
+    summary: Signup to the App
+    description: Signup the User to register on the app, takes email and password in body
+    tags:
+      - Auth
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginInput' # Replace with the correct schema reference
+          example:
+            email: rahl12@gmail.com
+            password: mysecretpassword
+
+/um-api/v1/auth/login:
+  post:
+    summary: Login to the App
+    description: Login to the App to access features of application, takes email and password in body
+    tags:
+      - Auth
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginInput'
+          example:
+            email: rahl12@gmail.com
+            password: mysecretpassword
+
+/um-api/v1/auth/forgot-password:
+  put:
+    summary: Forgot Password
+    description: To reset password if user forgot his password
+    tags:
+      - Auth
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginWithOTP'
+          example:
+            otp: '234143'
+            email: rahl12@gmail.com
+            password: mysecretpassword
+
+/um-api/v1/auth/sendEmailOtp:
+  post:
+    summary: Send Otp to Email Address
+    description: Send Otp to Email Address for 2fa
+    tags:
+      - Auth
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SendEmailOtp'
+          example:
+            email: rahl12@gmail.com
+            purpose: Forgot
+
+/um-api/v1/auth/pre-login:
+  post:
+    summary: Login to the App and check 2fa is enabled or not
+    description: Login to the App to access features of application
+    tags:
+      - Auth
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PreloginInput'
+          example:
+            email: email@email,
+            password: Uber@789,
+            country: India,
+            regionName: Haryana,
+            city: Gurgaon,
+            device: PC,
+            os: Linux,
+            ip: xx.xx.xx.xx,
+            browser: Chrome
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: time
+        updatedAt:
+          type: time
+    LoginResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+          description: JSON web token
+
+    LoginInput:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          description: E-mail Id of Registered User
+        password:
+          type: string
+          description: Password for Registered User
+      example:
+        email: 'mailto:johndoe@gmail.com'
+        password: 'Resemble@11'
+
+    SendEmailOtp:
+      type: object
+      required:
+        - email
+        - purpose
+      properties:
+        email:
+          type: string
+          description: E-mail Id of Registered User
+        purpose:
+          type: string
+          description: Purpose of send otp
+      example:
+        email: 'mailto:johndoe@gmail.com'
+        purpose: 'Forgot'
+    # ResetPasswordInput:
+    #   type: object
+    #   required:
+    #     - password
+    #   properties:
+    #     password:
+    #       type: string
+    #       description: Changed Password for Registered User
+    PreloginInput:
+      type: object
+      required:
+        - email
+        - password
+        - country
+        - regionName
+        - city
+        - device
+        - os
+        - ip
+        - browser
+      properties:
+        email:
+          type: string
+          description: email address of the user
+        password:
+          type: string
+          description: password of the user account
+        country:
+          type: string
+          description: country of user
+        regionName:
+          type: string
+          description: regionName of user
+        city:
+          type: string
+          description: city of user
+        device:
+          type: string
+          description: device of user
+        os:
+          type: string
+          description: os of user
+        ip:
+          type: string
+          description: ip of user
+        browser:
+          type: string
+          description: browser of user
+
+    LoginWithOTP:
+      type: object
+      required:
+        - email
+        - password
+        - otp
+      properties:
+        email:
+          type: string
+          description: email address of the user
+        password:
+          type: string
+          description: password of the user account
+        otp:
+          type: number
+          description: otp recieved on email account

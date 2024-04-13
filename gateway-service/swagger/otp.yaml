@@ -1,0 +1,122 @@
+tags:
+  name: Otp
+  description: Otp related Apis
+
+/um-api/v1/otp/email-verification:
+  put:
+    summary: Email verification
+    description: Email verification via otp
+    tags:
+      - Otp
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmailVerificationInput'
+          example:
+            email: email@email,
+            otp: 323911
+
+/um-api/v1/otp/send-message:
+  post:
+    summary: Send message
+    description: Send otp to mobile
+    tags:
+      - Otp
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SendMobileOtp'
+          example:
+            country_code: 91,
+            phone_number: 6394066642,
+            accounts_page: true
+
+/um-api/v1/otp/phone-verification:
+  put:
+    summary: Verify Phone Otp
+    description: To verify the otp received on phone number
+    tags:
+      - Otp
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PhoneVerificationInput'
+          example:
+            email: email@email ,
+            country_code: 91,
+            phone_number: 7982536307,
+            otp: 142378 ,
+            accounts_page: true
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: time
+        updatedAt:
+          type: time
+
+    EmailVerificationInput:
+      type: object
+      required:
+        - email
+        - otp
+      properties:
+        email:
+          type: string
+          description: E-mail Id of Registered User
+        otp:
+          type: string
+          description: otp entered by User
+
+    SendMobileOtp:
+      type: object
+      required:
+        - country_code
+        - phone_number
+        - accounts_page
+      properties:
+        country_code:
+          type: number
+          description: Country Code of Registered User
+        phone_number:
+          type: number
+          description: Phone Number Id of Registered User
+        accounts_page:
+          type: boolean
+
+    PhoneVerificationInput:
+      type: object
+      required:
+        - country_code
+        - phone_number
+        - accounts_page
+        - email
+      properties:
+        country_code:
+          type: number
+          description: Country Code of Registered User
+        phone_number:
+          type: number
+          description: Phone Number Id of Registered User
+        accounts_page:
+          type: boolean
+        email:
+          type: string
+          description: E-mail Id of Registered User
